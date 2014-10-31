@@ -28,14 +28,14 @@ if exists("*GetBatshIndent")
 endif
 
 " Keywords that begin a block
-let s:BEGIN_BLOCK = '\C^\%(if\|else\|while\)\>'
+let s:BEGIN_BLOCK = '\C^.*\%(if\|else\|while\)\>'
 " let s:BEGIN_BLOCK = '\C^\%(if\|else\|while\)\>\%(\s*{\)\@!'
 
 " Operators that begin a block
 let s:BEGIN_BLOCK_OP = '[([{:=]$'
 
 " An else with a condition attached
-let s:ELSE_COND = '\C^\s*else\s\+if'
+let s:ELSE_COND = '\C^\s*.*else\s\+if'
 
 " A single-line else statement (without a condition attached)
 let s:SINGLE_LINE_ELSE = '\C^else\s\+\%(if\)\@!'
@@ -262,7 +262,6 @@ function! GetBatshIndent(curlnum)
 
   " If the current line starts with { just after the BEGIN_BLOCK
   " use that one instead
-  echo prevline
   if curline[0] =~ '{' && prevline =~ s:BEGIN_BLOCK
     return indent(prevnlnum)
   endif
@@ -273,6 +272,7 @@ function! GetBatshIndent(curlnum)
   endif
 
   " Check if the previous line starts with a keyword that begins a block.
+  echo prevline
   if prevline =~ s:BEGIN_BLOCK
     " Indent if the previous line isn't a single-line statement.
     if prevline !~ s:SINGLE_LINE_ELSE
@@ -287,10 +287,10 @@ function! GetBatshIndent(curlnum)
   \                            "s:IsCommentOrString(line('.'), col('.'))",
   \                            '\[\|(\|{', '\]\|)\|}')
 
-  " If inside brackets, indent relative to the brackets, but don't outdent an
-  " already indented line.
+  " If inside brackets, indent relative to the brackets
   if matchlnum
-    return max([indent(a:curlnum), indent(matchlnum) + s:ShiftWidth()])
+    return indent(matchlnum) + s:ShiftWidth()
+    " return max([indent(a:curlnum), indent(matchlnum) + s:ShiftWidth()])
   endif
 
   " No special rules applied, so use the default policy.

@@ -29,7 +29,7 @@ This project adds [Batsh] support to vim. It covers syntax, indenting, and more.
    set rtp+=~/.vim/bundle/vundle/
    call vundle#rc()
 
-   Bundle 'vuryleo/vim-batsh'
+   Bundle 'vuryleo/vim-Batsh'
 
    syntax enable
    filetype plugin indent on
