@@ -19,7 +19,7 @@ This project adds [Batsh] support to vim. It covers syntax, indenting, and more.
 [Install Vundle]: https://github.com/gmarik/vundle#quick-start
 
 2. Configure your vimrc for Vundle. Here's a bare-minimum vimrc that enables all
-   the features of `vim-coffee-script`:
+   the features of `vim-Batsh`:
 
 
    ```vim
