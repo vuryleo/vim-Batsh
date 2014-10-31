@@ -252,10 +252,10 @@ function! GetBatshIndent(curlnum)
   endfor
 
   " If the previous line is a comment, use its indentation
-  " <del> but don't force indenting </del>
-  if prevlnum != prevnlnum
-    return indent(prevlnum)
-    " return min([indent(a:curlnum), indent(prevlnum)])
+  " but don't force indenting
+  if prevlnum != prevnlnum && prevnlnum == 0
+    " return indent(prevlnum)
+    return min([indent(a:curlnum), indent(prevlnum)])
   endif
 
   let prevline = s:GetTrimmedLine(prevnlnum)
