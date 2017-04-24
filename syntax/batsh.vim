@@ -12,7 +12,10 @@ syn keyword batshKeyword if else while function global return
 " Built-in functions
 syn keyword batshBuiltInFunction print println call bash batch readdir exists
 " Built-in types
-syn match batshNumber "\v[0-9\.]*"
+" A integer, including a leading plus or minus
+syn match batshNumber /\%(\i\|\$\)\@<![-+]\?\d\+\%(e[+-]\?\d\+\)\?/ display
+" A floating-point number, including a leading plus or minus
+syn match batshFloat /\%(\i\|\$\)\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/ display
 syn keyword batshBool true false
 syn region batshString start=/\v"/ skip=/\v\\./ end=/\v"/
 
@@ -40,12 +43,13 @@ syn match batshComment "\v//.*$"
 
 " highlights
 if version >= 508
-  hi link batshKeyword Keyword
-  hi link batshBuiltInFunction Function
   hi link batshBool Boolean
-  hi link batshOperator Operator
+  hi link batshBuiltInFunction Function
   hi link batshComment Comment
+  hi link batshFloat Float
+  hi link batshKeyword Keyword
   hi link batshNumber Number
+  hi link batshOperator Operator
   hi link batshString String
 endif
 
